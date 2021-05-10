@@ -1,0 +1,147 @@
+<?php
+
+/**
+ * @file
+ * This is abraham_test.php file.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_page_attachments().
+ */
+function abraham_test_page_attachments(array &$page) {
+  // Add abraham-test library.
+  $page['#attached']['library'][] = 'abraham_test/abraham-test';
+
+  // Get current url.
+  $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+  if (strpos($url, 'registro')) {
+    // Set database connection.
+    $con = mysqli_connect('localhost', 'root', 'admin', 'learning_abraham_test');
+    if (mysqli_connect_errno()) {
+      echo 'Failed to connect to MySQL: ' . mysqli_connect_error();
+      exit();
+    }
+
+    // Get maximum id from table myusers.
+    if ($result = mysqli_query($con, 'SELECT MAX(id) AS id FROM myusers')) {
+      if (!empty($result->num_rows)) {
+        foreach ($result as $record) {
+          $uid = $record['id'];
+        }
+      }
+    }
+
+    // Delete record from table registered.
+    $con = Database::getConnection();
+    $con = $con->delete('registered')
+      ->condition('id', 1)
+      ->execute();
+  }
+  elseif (strpos($url, 'login')) {
+    // Set database connection.
+    $con = mysqli_connect('localhost', 'root', 'admin', 'learning_abraham_test');
+    if (mysqli_connect_errno()) {
+      echo 'Failed to connect to MySQL: ' . mysqli_connect_error();
+      exit();
+    }
+
+    // Get name from table myusers.
+    if ($result = mysqli_query($con, 'SELECT name FROM logged_in')) {
+      if (!empty($result->num_rows)) {
+        foreach ($result as $record) {
+          $name = $record['name'];
+        }
+      }
+    }
+
+    // Get id from table myusers.
+    if ($result = mysqli_query($con, "SELECT id FROM myusers WHERE name = '" . $name . "'")) {
+      if (!empty($result->num_rows)) {
+        foreach ($result as $record) {
+          $uid = $record['id'];
+        }
+      }
+    }
+
+    // Delete record from table logged in.
+    $con = Database::getConnection();
+    $con = $con->delete('logged_in')
+      ->condition('id', 1)
+      ->execute();
+  }
+  elseif (strpos($url, 'importar')) {
+    // Set database connection.
+    $con = mysqli_connect('localhost', 'root', 'admin', 'learning_abraham_test');
+    if (mysqli_connect_errno()) {
+      echo 'Failed to connect to MySQL: ' . mysqli_connect_error();
+      exit();
+    }
+
+    // Get id from table imported file.
+    if ($result = mysqli_query($con, 'SELECT id FROM imported_file')) {
+      if (!empty($result->num_rows)) {
+        // Delete record from table imported files.
+        $con = Database::getConnection();
+        $con = $con->delete('imported_file')
+          ->condition('id', 1)
+          ->execute();
+        // Get names value from temporal variable.
+        $names = $_SESSION['names_markup'];
+        // Add variable to drupalSettings.
+        $page['#attached']['drupalSettings']['abraham_test']['names'] = $names;
+        // Include a js, which was defined in abraham_test.libraries.yml.
+        $page['#attached']['library'][] = 'abraham_test/modal';
+      }
+    }
+  }
+
+  // Add variable to drupalSettings.
+  $page['#attached']['drupalSettings']['abraham_test']['uid'] = $uid;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function abraham_test_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Apply the form_alter to a specific form #id,
+  // the form #id can be found through inspecting the markup.
+  if ($form['#id'] == 'register-form') {
+    // Set database connection.
+    $con = mysqli_connect('localhost', 'root', 'admin', 'learning_abraham_test');
+    if (mysqli_connect_errno()) {
+      echo 'Failed to connect to MySQL: ' . mysqli_connect_error();
+      exit();
+    }
+
+    // Get id from table registered.
+    if ($result = mysqli_query($con, 'SELECT id FROM registered WHERE id = 1')) {
+      if (!empty($result->num_rows)) {
+        // Include a js, which was defined in abraham_test.libraries.yml.
+        $form['#attached']['library'][] = 'abraham_test/modal';
+      }
+    }
+  }
+
+  // Apply the form_alter to a specific form #id,
+  // the form #id can be found through inspecting the markup.
+  if ($form['#id'] == 'login-form') {
+    // Set database connection.
+    $con = mysqli_connect('localhost', 'root', 'admin', 'learning_abraham_test');
+    if (mysqli_connect_errno()) {
+      echo 'Failed to connect to MySQL: ' . mysqli_connect_error();
+      exit();
+    }
+
+    // Get id from table logged in.
+    if ($result = mysqli_query($con, 'SELECT id FROM logged_in WHERE id = 1')) {
+      if (!empty($result->num_rows)) {
+        // Include a js, which was defined in abraham_test.libraries.yml.
+        $form['#attached']['library'][] = 'abraham_test/modal';
+      }
+    }
+  }
+}

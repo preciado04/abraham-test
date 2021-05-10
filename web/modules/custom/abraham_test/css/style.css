@@ -1,0 +1,17 @@
+h1.title {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+a.close-section {
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.logged-in-wrapper .user:before {
+  content: '\f2be';
+  font-family: 'fontawesome';
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+}

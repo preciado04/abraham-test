@@ -1,0 +1,39 @@
+login.login:
+  path: '/usuario/login'
+  defaults:
+    _form:  '\Drupal\abraham_test\Form\LoginForm'
+    _title: 'Iniciar sesión'
+  requirements:
+    _permission: 'access content'
+
+register_form.register_form:
+  path: '/usuario/registro'
+  defaults:
+    _form:  '\Drupal\abraham_test\Form\RegisterForm'
+    _title: 'Registro'
+  requirements:
+    _permission: 'access content'
+
+consultation.consultation:
+  path: '/usuario/consulta'
+  defaults:
+    _controller:  '\Drupal\abraham_test\Controller\ConsultationController::content'
+    _title: 'Consulta'
+  requirements:
+    _permission: 'access content'
+
+consultation_excel.consultation_excel:
+  path: '/usuario/consulta/excel'
+  defaults:
+    _controller:  '\Drupal\abraham_test\Controller\ConsultationController::content'
+    _title: 'Consulta'
+  requirements:
+    _permission: 'access content'
+
+import.import:
+  path: '/usuario/importar'
+  defaults:
+    _form:  '\Drupal\abraham_test\Form\ImportForm'
+    _title: 'Importación'
+  requirements:
+    _permission: 'Import form'
