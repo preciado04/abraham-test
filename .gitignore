@@ -133,5 +133,6 @@ upstream/web/
 # Other
 web/.gitignore
 pvt
+.DS_Store
 
 
