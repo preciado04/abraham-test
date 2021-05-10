@@ -18,7 +18,8 @@
         "drush/drush": "^10"
     },
     "conflict": {
-            "drupal/drupal": "*"
+            "drupal/drupal": "*",
+            "symfony/http-foundation": "3.4.24"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
