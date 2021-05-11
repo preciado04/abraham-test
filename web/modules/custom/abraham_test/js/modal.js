@@ -7,7 +7,6 @@
 
   Drupal.behaviors.abrahamTest = {
     attach: function (context, settings) {
-      console.log(drupalSettings.abraham_test.names);
       $('html', context).once('body').each(function (i, item) {
         // Validate if exists error message.
         if (!$('.messages__wrapper').length) {
