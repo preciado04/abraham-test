@@ -80,7 +80,6 @@ class ImportForm extends FormBase {
    * Variable $form_state @param FormStateInterface $form_state.
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $form['section']['#attached']['drupalSettings']['table_data'] = 'This is a test.';
     // The file id will be stored as an array.
     $file = \Drupal::entityTypeManager()->getStorage('file')->load($form_state->getValue('csv_excel_file')[0]);
     $full_path = $file->get('uri')->value;
@@ -93,13 +92,14 @@ class ImportForm extends FormBase {
       $sheet_data = $spreadsheet->getActiveSheet();
 
       $names = [];
+      $count = 0;
       foreach ($sheet_data->getRowIterator() as $row) {
         $cell_iterator = $row->getCellIterator();
         $cell_iterator->setIterateOnlyExistingCells(FALSE);
 
         $cells = [];
         foreach ($cell_iterator as $cell) {
-          if ($cell->getValue() !== 'name') {
+          if ($count !== 0) {
             // Add values to myusers table.
             $con = Database::getConnection();
             $con->insert('myusers')->fields(
@@ -113,6 +113,8 @@ class ImportForm extends FormBase {
           }
         }
 
+        // Increment count.
+        $count++;
         // Set value to names array.
         $names[] = $cells;
         // Wrap names into a div tag.

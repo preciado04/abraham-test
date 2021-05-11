@@ -84,7 +84,7 @@
     modal += '          <span aria-hidden="true">&times;</span>';
     modal += '        </button>';
     modal += '      </div>';
-    modal += '      <div class="modal-body"><h2>' + body + '</h2></div>';
+    modal += '      <div class="modal-body"><div class="content"><h2>' + body + '</h2></div></div>';
     modal += '      <div class="modal-footer">';
     modal += '        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>';
     modal += '      </div>';

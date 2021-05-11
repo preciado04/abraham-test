@@ -15,3 +15,8 @@ a.close-section {
   height: 30px;
   margin-right: 5px;
 }
+
+#abraham-test-modal .modal-body .content {
+  max-height: 500px;
+  overflow: scroll;
+}

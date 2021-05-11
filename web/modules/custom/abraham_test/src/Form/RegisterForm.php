@@ -69,7 +69,7 @@ class RegisterForm extends FormBase {
     }
 
     // Set database connection.
-    $con = mysqli_connect('localhost', 'root', 'admin', 'learning_abraham_test');
+    $con = mysqli_connect('dbserver.dev.a3aa4388-8579-40b7-990a-324bfc12bf6e.drush.in', 'pantheon', 'ae3889ab347c43c19d53e986c410f932', 'pantheon', '13378');
     if (mysqli_connect_errno()) {
       echo 'Failed to connect to MySQL: ' . mysqli_connect_error();
       exit();
@@ -90,36 +90,44 @@ class RegisterForm extends FormBase {
           }
         }
 
-        // Insert user on myusers table.
-        $con = Database::getConnection();
-        $con->insert('myusers')->fields(
-          [
-            'name' => $name,
-            'password' => $password,
-          ]
-        )->execute();
+        // Add value to user id variable if it's empty.
+        if (empty($uid)) {
+          $uid = 1;
+        }
 
-        // Insert id value on registered table.
-        $con->insert('registered')->fields(
-          [
-            'id' => 1,
-          ]
-        )->execute();
+        // Insert data into database tables.
+        if (strlen($name) > 4) {
+          // Insert user on myusers table.
+          $con = Database::getConnection();
+          $con->insert('myusers')->fields(
+            [
+              'name' => $name,
+              'password' => $password,
+            ]
+          )->execute();
 
-        // Get date and ip values.
-        $date = date('Y-m-d h:i:s');
-        $ip = Drupal::request()->getClientIp();
+          // Insert id value on registered table.
+          $con->insert('registered')->fields(
+            [
+              'id' => 1,
+            ]
+          )->execute();
 
-        // Add values to access log table.
-        $con = Database::getConnection();
-        $con->insert('access_log')->fields(
-          [
-            'date' => $date,
-            'ip' => $ip,
-            'uid' => $uid,
-            'log_type' => 'registro',
-          ]
-        )->execute();
+          // Get date and ip values.
+          $date = date('Y-m-d h:i:s');
+          $ip = Drupal::request()->getClientIp();
+
+          // Add values to access log table.
+          $con = Database::getConnection();
+          $con->insert('access_log')->fields(
+            [
+              'date' => $date,
+              'ip' => $ip,
+              'uid' => $uid,
+              'log_type' => 'registro',
+            ]
+          )->execute();
+        }
       }
     }
 

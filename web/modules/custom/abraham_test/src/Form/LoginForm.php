@@ -65,7 +65,7 @@ class LoginForm extends FormBase {
     $password = $form_state->getValue('password');
 
     // Set database connection.
-    $con = mysqli_connect('localhost', 'root', 'admin', 'learning_abraham_test');
+    $con = mysqli_connect('dbserver.dev.a3aa4388-8579-40b7-990a-324bfc12bf6e.drush.in', 'pantheon', 'ae3889ab347c43c19d53e986c410f932', 'pantheon', '13378');
     if (mysqli_connect_errno()) {
       echo 'Failed to connect to MySQL: ' . mysqli_connect_error();
       exit();
