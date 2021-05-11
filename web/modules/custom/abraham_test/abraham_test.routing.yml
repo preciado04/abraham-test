@@ -36,4 +36,4 @@ import.import:
     _form:  '\Drupal\abraham_test\Form\ImportForm'
     _title: 'Importación'
   requirements:
-    _permission: 'Import form'
+    _permission: 'access content'
