@@ -15,6 +15,7 @@
     ],
     "require": {
         "drupal/admin_toolbar": "^3.0",
+        "phpoffice/phpspreadsheet": "^1.17",
         "drush/drush": "^10",
         "pantheon-upstreams/upstream-configuration": "*"
     },
