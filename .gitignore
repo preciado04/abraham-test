@@ -98,7 +98,6 @@ upstream/web/
 /web/.eslintrc.json
 /web/.gitattributes
 /web/.ht.router.php
-/web/.htaccess
 /web/INSTALL.txt
 /web/README.txt
 /web/autoload.php
