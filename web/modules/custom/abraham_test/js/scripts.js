@@ -16,7 +16,7 @@
           var exp = /^[a-zA-Z ñÑ]+$/;
 
           // Show modal.
-          if (e.key != 'Enter' && e.key != 'Backspace' && e.key != 'ñ' && e.key != 'Ñ') {
+          if (e.key != 'Enter' && e.key != 'Backspace' && e.key != 'ñ' && e.key != 'Ñ' && e.key != 'CapsLock' && e.key != 'Shift') {
             if (!exp.test(name)) {
               showModal('Solo se aceptan letras.');
             }
